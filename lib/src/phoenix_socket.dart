@@ -91,7 +91,6 @@ class PhoenixSocket {
 
     for (int tries = 0; _conn == null && _reconnect; tries += 1) {
       try {
-        print("---- trying to connect");
         _conn = _connectionProvider(_endpoint.toString());
         await _conn.waitForConnection();
       } catch (reason) {
