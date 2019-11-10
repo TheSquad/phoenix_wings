@@ -96,16 +96,8 @@ class PhoenixSocket {
         await _conn.waitForConnection();
       } catch (reason) {
         _conn = null;
-
-        if (tries > 1) {
-          _stateChangeCallbacks.error.forEach((cb) => cb(reason));
-          return;
-        }
-        print("------------ tries: $tries");
-        var wait = reconnectAfterMs[min(tries, reconnectAfterMs.length - 1)];
-        await new Future.delayed(new Duration(milliseconds: wait));
-
-        continue;
+        _stateChangeCallbacks.error.forEach((cb) => cb(reason));
+        return;
       }
 
       _onConnOpened();
